@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('dashboard.index');
+    return view('dashboard.index', [ 'title' => 'Dashboard', 'active' => 'dashboard']);
 });
+
+Route::get('/products', [ProductController::class, 'all']);
+Route::resource('/product', ProductController::class);

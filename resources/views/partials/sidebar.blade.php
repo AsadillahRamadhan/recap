@@ -37,7 +37,7 @@
                with font-awesome or any other icon font library -->
                <li class="nav-header">Home</li>
           <li class="nav-item">
-            <a href="/" class="nav-link">
+            <a href="/" class="nav-link @if($active == 'dashboard') {{ 'active' }} @endif">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -46,7 +46,7 @@
           </li>
           <li class="nav-header">Product</li>
           <li class="nav-item">
-            <a href="/" class="nav-link">
+            <a href="/products" class="nav-link @if($active == 'product') {{ 'active' }} @endif">
               <i class="nav-icon fas fa-list"></i>
               <p>
                 Product
@@ -54,7 +54,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/" class="nav-link">
+            <a href="/" class="nav-link @if($active == 'history') {{ 'active' }} @endif">
               <i class="nav-icon fas fa-clock"></i>
               <p>
                 History
@@ -63,7 +63,7 @@
           </li>
           <li class="nav-header">Financial</li>
           <li class="nav-item">
-            <a href="/" class="nav-link">
+            <a href="/" class="nav-link @if($active == 'financial') {{ 'active' }} @endif">
               <i class="nav-icon fas fa-calendar-alt"></i>
               <p>
                 Income Recap
@@ -72,7 +72,7 @@
           </li>
           <li class="nav-header">Share</li>
           <li class="nav-item">
-            <a href="/" class="nav-link">
+            <a href="/" class="nav-link @if($active == 'share') {{ 'active' }} @endif">
               <i class="nav-icon fas fa-user-group"></i>
               <p>
                 Product Sharing
