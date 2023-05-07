@@ -2,24 +2,25 @@
 @section('content')
 <form action="{{ $url_form }}" method="post">
     @csrf
+    {!! (isset($product))? method_field('PUT') : '' !!}
 <div class="row">
     <div class="col-md-3">
         <img src="https://source.unsplash.com/260x360/?handphone" alt="" class="rounded img-thumbnail">
     </div>
     <div class="col-md-9">
-        <div class="d-flex"><h6 class="text-gray" id="storageTitle">Ram dan Memori Internal </h6><sup>&nbsp;&nbsp;<i class="fa-solid fa-pen-to-square" id="storage"></i></sup><input type="hidden" id="storageInput" name="spesifikasi"></div>
-        <div class="d-flex"><h1 class="mb-4" id="namaTitle">Nama</h1>&nbsp;<small><i class="fa-solid fa-pen-to-square" id="nama"></i></small><input type="hidden" id="namaInput" name="nama"></div>
+        <div class="d-flex"><h6 class="text-gray" id="storageTitle">{{ isset($product)? $product->spesifikasi : 'Ram dan Memori Internal' }}</h6><sup>&nbsp;&nbsp;<i class="fa-solid fa-pen-to-square" id="storage"></i></sup><input type="hidden" id="storageInput" name="spesifikasi" value="{{ isset($product)? $product->spesifikasi : old('spesifikasi') }}"></div>
+        <div class="d-flex"><h1 class="mb-4" id="namaTitle">{{ isset($product)? $product->nama : 'Nama' }}</h1>&nbsp;<small><i class="fa-solid fa-pen-to-square" id="nama"></i></small><input type="hidden" id="namaInput" name="nama" value="{{ isset($product)? $product->nama : old('nama') }}"></div>
         <div class="mb-3">
-            <div class="d-flex mb-2"><span>Deskripsi</span>&nbsp;<sup><i class="fa-solid fa-pen-to-square" id="desc"></i></sup><input type="hidden" id="descInput" name="deskripsi"></div>
-            <small id="descTitle"></small>
+            <div class="d-flex mb-2"><span>Deskripsi</span>&nbsp;<sup><i class="fa-solid fa-pen-to-square" id="desc"></i></sup><input type="hidden" id="descInput" name="deskripsi" value="{{ isset($product)? $product->deskripsi : old('deskripsi') }}"></div>
+            <small id="descTitle">{{ isset($product)? $product->deskripsi : '' }}</small>
         </div>
 
-        <div class="mb-3"><span class="mt-4" id="repairTitle">Biaya Reparasi</span>&nbsp;<sup><i class="fa-solid fa-pen-to-square" id="repair"></i></sup><input type="hidden" id="repairInput" name="biaya_reparasi"></div>
+        <div class="mb-3"><span class="mt-4" id="repairTitle">{{ isset($product)? 'Biaya Reparasi: Rp. ' . number_format($product->biaya_reparasi,2,",",".") : 'Biaya Reparasi' }}</span>&nbsp;<sup><i class="fa-solid fa-pen-to-square" id="repair"></i></sup><input type="hidden" id="repairInput" name="biaya_reparasi" value="{{ isset($product)? $product->biaya_reparasi : old('biaya_reparasi') }}"></div>
         
-        <div class="mb-3"><span id="kelengkapanTitle">Kelengkapan</span>&nbsp;<sup><i class="fa-solid fa-pen-to-square" id="kelengkapan"></i></sup><input type="hidden" id="kelengkapanInput" name="kelengkapan"></div>
-        <div class="mb-3"><span id="buyTitle">Harga Beli</span>&nbsp;<sup><i class="fa-solid fa-pen-to-square" id="buy"></i></sup><input type="hidden" id="buyInput" name="harga_beli"></div>
-        <div><span id="buyDateTitle">Tanggal Pembelian</span>&nbsp;<sup><i class="fa-solid fa-pen-to-square" id="buyDate"></i></sup><input type="hidden" id="buyDateInput" name="tanggal_pembelian"></div>
-        <div class="d-flex justify-content-end mt-3"><button type="submit" class="btn btn-secondary">Kirim</button></div>
+        <div class="mb-3"><span id="kelengkapanTitle">{{ isset($product)? 'Kelengkapan: ' . $product->kelengkapan : 'Kelengkapan' }}</span>&nbsp;<sup><i class="fa-solid fa-pen-to-square" id="kelengkapan"></i></sup><input type="hidden" id="kelengkapanInput" name="kelengkapan" value="{{ isset($product)? $product->kelengkapan : old('kelengkapan') }}"></div>
+        <div class="mb-3"><span id="buyTitle">{{ isset($product)? 'Harga Beli: Rp. ' . number_format($product->harga_beli,2,",",".") : 'Harga Beli' }}</span>&nbsp;<sup><i class="fa-solid fa-pen-to-square" id="buy"></i></sup><input type="hidden" id="buyInput" name="harga_beli" value="{{ isset($product)? $product->harga_beli : old('harga_beli') }}"></div>
+        <div><span id="buyDateTitle">{{ isset($product)? 'Tanggal Pembelian: ' . date('d F Y', strtotime($product->tanggal_pembelian)) : 'Tanggal Pembelian' }}</span>&nbsp;<sup><i class="fa-solid fa-pen-to-square" id="buyDate"></i></sup><input type="hidden" id="buyDateInput" name="tanggal_pembelian" value="{{ isset($product)? $product->tanggal_pembelian : old('tanggal_pembelian') }}"></div>
+        <div class="d-flex justify-content-end mt-3"><a href="/products" class="btn btn-success mr-1">Kembali</a><button type="submit" class="btn btn-primary">Kirim</button></div>
     </div>
 </div>
 </form>
@@ -37,11 +38,15 @@
 <script>
     //Nama
     $('#nama').click(function() {
-
+        let nama = ''
+        if(document.querySelector('#namaInput').value != null){
+            nama = document.querySelector('#namaInput').value
+        } 
         Swal.fire({
             title: 'Add Product Name',
             input: 'text',
             inputPlaceholder: 'Add Product Name',
+            inputValue: nama,
             showCancelButton: true,
                 inputAttributes: {
                     maxlength: 255,
@@ -59,11 +64,16 @@
 
     //Ram dan Memori Internal
     $('#storage').click(function() {
+        let storage = ''
+        if(document.querySelector('#storageInput').value != null){
+            storage = document.querySelector('#storageInput').value
+        }
 
 Swal.fire({
     title: 'Add Product Storage',
     input: 'text',
     inputPlaceholder: 'Add Product Storage',
+    inputValue: storage,
     showCancelButton: true,
         inputAttributes: {
             maxlength: 10,
@@ -81,11 +91,16 @@ if (result.isConfirmed) {
 
 //Harga Beli
 $('#buy').click(function() {
+    let buy = ''
+    if(document.querySelector('#buyInput').value != null){
+            buy = document.querySelector('#buyInput').value
+        } 
 
 Swal.fire({
     title: 'Add Product Price',
     input: 'number',
     inputPlaceholder: 'Add Product Price',
+    inputValue: buy,
     showCancelButton: true,
         inputAttributes: {
             maxlength: 255,
@@ -104,12 +119,23 @@ if (result.isConfirmed) {
 //Kelengkapan
 $('#kelengkapan').click(function(){
 
+    let kelengkapan = null
+    if(document.querySelector('#kelengkapanInput').value != null){
+            let temp = document.querySelector('#kelengkapanInput').value
+            if(temp == 'Fullset'){
+                kelengkapan = 1
+            } else {
+                kelengkapan = 0
+            }
+        }
+
     const inputOptions = ['Unit Only', 'Fullset']
 
     Swal.fire({
   title: 'Select Completeness',
   input: 'radio',
-  theme: 'dark',
+  showCancelButton: true,
+  inputValue: kelengkapan,
   inputOptions: inputOptions,
   inputValidator: (value) => {
     if (!value) {
@@ -132,11 +158,16 @@ if (result.isConfirmed) {
 
 //Reparasi
 $('#repair').click(function() {
+    let repair = ''
+    if(document.querySelector('#repairInput').value != null){
+            repair = document.querySelector('#repairInput').value
+        }
 
 Swal.fire({
     title: 'Add Repair Price',
     input: 'number',
     inputPlaceholder: 'Add Repair Price',
+    inputValue: repair,
     showCancelButton: true,
         inputAttributes: {
             maxlength: 255,
@@ -155,10 +186,16 @@ if (result.isConfirmed) {
 //deskripsi
 $('#desc').click(function() {
 
+    let desc = ''
+    if(document.querySelector('#descInput').value != null){
+            desc = document.querySelector('#descInput').value
+        }
+
 Swal.fire({
     title: 'Add Description',
     input: 'textarea',
     inputPlaceholder: 'Add Description',
+    inputValue: desc,
     showCancelButton: true,
         inputAttributes: {
             autocapitalize: 'off',
@@ -173,22 +210,30 @@ if (result.isConfirmed) {
 });
 });
 
+let temps = 0;
 //Tanggal pembelian
 $('#buyDate').click(function() {
+    let html = `<input type="date" class="input-group" id="inputDate" value="{{ isset($product)? $product->tanggal_pembelian : old('tanggal_pembelian') }}">`
+    
+    if(document.querySelector('#buyDateInput').value != null){
+            buyDate = document.querySelector('#buyDateInput').value
+        }
 
+    if(temps > 0){
+       html = `<input type="date" class="input-group" id="inputDate" value="` + buyDate + `">`
+    }
 Swal.fire({
     title: 'Add Buying Date',
-    input: 'date',
     inputPlaceholder: 'Add Buying Date',
     showCancelButton: true,
-    html: '<input type="date" class="input-group" id="inputDate">',
+    html: html,
 }).then((result) => {
 if (result.isConfirmed) {
     const temp = document.querySelector('#inputDate').value
     const date = new Date(temp);
     document.querySelector("#buyDateTitle").innerHTML = "Tanggal Pembelian: " + formatDate(date)
     document.querySelector("#buyDateInput").value = temp
-    
+    temps++
 }
 });
 });
@@ -205,7 +250,7 @@ function formatRupiah(angka) {
     var ribuan = reverse.match(/\d{1,3}/g);
     var hasil = ribuan.join(".").split("").reverse().join("");
 
-    return "Rp. " + hasil;
+    return "Rp. " + hasil + ",00";
 }
 
 function formatDate(date) {
@@ -217,8 +262,12 @@ function formatDate(date) {
   const day = date.getDate();
   const monthIndex = date.getMonth();
   const year = date.getFullYear();
-
-  return `${day} ${monthNames[monthIndex]} ${year}`;
+    if(day > 9){
+        return `${day} ${monthNames[monthIndex]} ${year}`;
+    } else {
+        return `${'0'+ day} ${monthNames[monthIndex]} ${year}`;
+    }
+  
 }
 
 </script>

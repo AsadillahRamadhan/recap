@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,3 +21,7 @@ Route::get('/', function () {
 
 Route::get('/products', [ProductController::class, 'all']);
 Route::resource('/product', ProductController::class);
+Route::post('/product/{id}/terjual', [ProductController::class, 'terjual']);
+
+Route::get('/histories', [HistoryController::class, 'index']);
+Route::resource('/history', HistoryController::class);

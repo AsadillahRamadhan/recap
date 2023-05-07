@@ -9,7 +9,7 @@
             <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">CPU Traffic</span>
+              <span class="info-box-text">CPU Traffics</span>
               <span class="info-box-number">
                 10
                 <small>%</small>
@@ -42,7 +42,7 @@
             <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
 
             <div class="info-box-content">
-              <span class="info-box-text">Sales</span>
+              <span class="info-box-text">Total Produk</span>
               <span class="info-box-number">760</span>
             </div>
             <!-- /.info-box-content -->

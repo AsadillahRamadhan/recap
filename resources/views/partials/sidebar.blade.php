@@ -54,7 +54,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="/" class="nav-link @if($active == 'history') {{ 'active' }} @endif">
+            <a href="/histories" class="nav-link @if($active == 'history') {{ 'active' }} @endif">
               <i class="nav-icon fas fa-clock"></i>
               <p>
                 History
