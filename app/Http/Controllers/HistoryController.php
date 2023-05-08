@@ -17,7 +17,11 @@ class HistoryController extends Controller
 
         $total_price = 0;
         foreach($histories as $history){
-            $total_price += ($history->harga_jual - $history->harga_beli - $history->biaya_reparasi);
+            if($history->is_sharing == 1){
+                $total_price += (($history->harga_jual - $history->harga_beli - $history->biaya_reparasi) / 2);
+            } else {
+                $total_price += ($history->harga_jual - $history->harga_beli - $history->biaya_reparasi);
+            }
         }
 
         if(isset($request->start_date)){

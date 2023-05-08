@@ -10,7 +10,7 @@
             <img class="rounded" src="https://source.unsplash.com/260x170/?handphone" class="card-img-top" alt="...">
             <div class="card-body">
               <h6 class="text-gray"><small class="text-end">{{ date('d F Y', strtotime($product->tanggal_pembelian)); }}</small></h6>
-              <h5 class="card-title">{{ $product->nama }}</h5><br>
+              <h5 class="card-title">{{ $product->nama }}{{ ($product->is_sharing == 1)? ' (Sharing)' : '' }}</h5><br>
               <h6 class="text-gray"><small class="text-end">{{ $product->spesifikasi }}</small></h6>
               <p class="card-text">{{ $product->deskripsi }}</p>
               <p class="card-text">{{ "Rp. " . number_format($product->harga_beli,2,",",".") }}</p>

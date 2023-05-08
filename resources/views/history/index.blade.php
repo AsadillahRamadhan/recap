@@ -30,7 +30,7 @@
         @if(count($histories) != null)
         @foreach($histories as $history)
         <tr>
-            <td>{{ $history->nama }}</td>
+            <td>{{ $history->nama }}{{ ($history->is_sharing == 1)? ' (Sharing)' : '' }}</td>
             <td>{{ "Rp. " . number_format($history->harga_beli,2,".",",") }}</td>
             <td>{{ "Rp. " . number_format($history->biaya_reparasi,2,".",",") }}</td>
             <td>{{ "Rp. " . number_format($history->harga_jual,2,".",",") }}</td>

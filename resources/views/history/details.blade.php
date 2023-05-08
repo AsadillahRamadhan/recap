@@ -7,7 +7,7 @@
     </div>
     <div class="col-md-9">
         <div class="d-flex"><h6 class="text-gray" id="storageTitle">{{ $product->spesifikasi }}</h6></div>
-        <div class="d-flex"><h1 class="mb-4" id="namaTitle">{{ $product->nama }}</h1></div>
+        <div class="d-flex"><h1 class="mb-4" id="namaTitle">{{ $product->nama }}{{ ($product->is_sharing == 1)? ' (Sharing)' : '' }}</h1></div>
         <div class="mb-3">
             <div class="d-flex mb-2"><span>Deskripsi:</span></div>
             <small id="descTitle">{{ $product->deskripsi }}</small>
