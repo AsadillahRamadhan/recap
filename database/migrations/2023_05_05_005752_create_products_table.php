@@ -24,6 +24,7 @@ return new class extends Migration
             $table->date('tanggal_penjualan')->nullable();
             $table->enum('kelengkapan', ['Unit Only', 'Fullset']);
             $table->string('link_gambar')->nullable();
+            $table->boolean('is_sharing');
             $table->timestamps();
         });
     }

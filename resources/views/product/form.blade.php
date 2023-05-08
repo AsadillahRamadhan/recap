@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('content')
-<form action="{{ $url_form }}" method="post">
+<form action="{{ $url_form }}" method="post" id="formProduct">
     @csrf
     {!! (isset($product))? method_field('PUT') : '' !!}
 <div class="row">
@@ -19,6 +19,7 @@
         
         <div class="mb-3"><span id="kelengkapanTitle">{{ isset($product)? 'Kelengkapan: ' . $product->kelengkapan : 'Kelengkapan' }}</span>&nbsp;<sup><i class="fa-solid fa-pen-to-square" id="kelengkapan"></i></sup><input type="hidden" id="kelengkapanInput" name="kelengkapan" value="{{ isset($product)? $product->kelengkapan : old('kelengkapan') }}"></div>
         <div class="mb-3"><span id="buyTitle">{{ isset($product)? 'Harga Beli: Rp. ' . number_format($product->harga_beli,2,",",".") : 'Harga Beli' }}</span>&nbsp;<sup><i class="fa-solid fa-pen-to-square" id="buy"></i></sup><input type="hidden" id="buyInput" name="harga_beli" value="{{ isset($product)? $product->harga_beli : old('harga_beli') }}"></div>
+        <input type="hidden" id="isSharingInput" name="is_sharing">
         <div><span id="buyDateTitle">{{ isset($product)? 'Tanggal Pembelian: ' . date('d F Y', strtotime($product->tanggal_pembelian)) : 'Tanggal Pembelian' }}</span>&nbsp;<sup><i class="fa-solid fa-pen-to-square" id="buyDate"></i></sup><input type="hidden" id="buyDateInput" name="tanggal_pembelian" value="{{ isset($product)? $product->tanggal_pembelian : old('tanggal_pembelian') }}"></div>
         <div class="d-flex justify-content-end mt-3"><a href="/products" class="btn btn-success mr-1">Kembali</a><button type="submit" class="btn btn-primary">Kirim</button></div>
     </div>
@@ -238,6 +239,29 @@ if (result.isConfirmed) {
 });
 });
 
+//Is Sharing
+$('#formProduct').on('submit', function(){
+    event.preventDefault()
+    Swal.fire({
+    title: 'Product Sharing',
+    text: 'Apakah ini adalah Product Sharing?',
+    icon: 'warning',
+    showCancelButton: true,
+    showDenyButton: true,
+    confirmButtonText: 'Iya',
+    denyButtonText: 'Tidak',
+    cancelButtonText: 'Batal'
+  }).then((result) => {
+    if (result.isConfirmed) {
+        document.querySelector('#isSharingInput').value = 1
+        validator()
+    } else if (result.isDenied){
+        document.querySelector('#isSharingInput').value = 0
+        validator()
+    }
+  });
+})
+
 
 function formatRupiah(angka) {
     var bilangan = parseInt(angka);
@@ -268,6 +292,30 @@ function formatDate(date) {
         return `${'0'+ day} ${monthNames[monthIndex]} ${year}`;
     }
   
+}
+
+function validator(){
+    const num1 = (document.getElementById('namaInput')||{}).value||"";
+    const num2 = (document.getElementById("storageInput")||{}).value||"";
+    const num3 = (document.getElementById("buyInput")||{}).value||"";
+    const num4 = (document.getElementById('kelengkapanInput')||{}).value||"";
+    const num5 = (document.getElementById('repairInput')||{}).value||"";
+    const num6 = (document.getElementById('descInput')||{}).value||"";
+    const num7 = (document.getElementById("buyDateInput")||{}).value||"";
+    const num8 = (document.getElementById("isSharingInput")||{}).value||"";
+
+    if(num1 == "" || num2 == "" || num3 == "" || num4 == "" || num5 == "" || num6 == "" || num7 == "" || num8 == ""){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Isi Semua Data Terlebih Dahulu!',
+            })
+        event.preventDefault();
+    } else {
+        document.querySelector("#formProduct").submit();
+    }
+
+
 }
 
 </script>
