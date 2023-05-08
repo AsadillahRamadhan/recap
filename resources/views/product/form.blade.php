@@ -19,7 +19,7 @@
         
         <div class="mb-3"><span id="kelengkapanTitle">{{ isset($product)? 'Kelengkapan: ' . $product->kelengkapan : 'Kelengkapan' }}</span>&nbsp;<sup><i class="fa-solid fa-pen-to-square" id="kelengkapan"></i></sup><input type="hidden" id="kelengkapanInput" name="kelengkapan" value="{{ isset($product)? $product->kelengkapan : old('kelengkapan') }}"></div>
         <div class="mb-3"><span id="buyTitle">{{ isset($product)? 'Harga Beli: Rp. ' . number_format($product->harga_beli,2,",",".") : 'Harga Beli' }}</span>&nbsp;<sup><i class="fa-solid fa-pen-to-square" id="buy"></i></sup><input type="hidden" id="buyInput" name="harga_beli" value="{{ isset($product)? $product->harga_beli : old('harga_beli') }}"></div>
-        <input type="hidden" id="isSharingInput" name="is_sharing">
+        <input type="hidden" id="isSharingInput" name="is_sharing" value="{{ isset($product)? $product->is_sharing : old('is_sharing') }}">
         <div><span id="buyDateTitle">{{ isset($product)? 'Tanggal Pembelian: ' . date('d F Y', strtotime($product->tanggal_pembelian)) : 'Tanggal Pembelian' }}</span>&nbsp;<sup><i class="fa-solid fa-pen-to-square" id="buyDate"></i></sup><input type="hidden" id="buyDateInput" name="tanggal_pembelian" value="{{ isset($product)? $product->tanggal_pembelian : old('tanggal_pembelian') }}"></div>
         <div class="d-flex justify-content-end mt-3"><a href="/products" class="btn btn-success mr-1">Kembali</a><button type="submit" class="btn btn-primary">Kirim</button></div>
     </div>
@@ -242,7 +242,9 @@ if (result.isConfirmed) {
 //Is Sharing
 $('#formProduct').on('submit', function(){
     event.preventDefault()
-    Swal.fire({
+    const temp = (document.getElementById('isSharingInput')||{}).value||"";
+    if(temp == ""){
+        Swal.fire({
     title: 'Product Sharing',
     text: 'Apakah ini adalah Product Sharing?',
     icon: 'warning',
@@ -260,6 +262,10 @@ $('#formProduct').on('submit', function(){
         validator()
     }
   });
+    } else {
+        validator()
+    }
+    
 })
 
 
